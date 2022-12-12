@@ -21,7 +21,7 @@ mongoose
   })
   .then(() => {
     app.listen(port, () => {
-      console.log("connect");
+      console.log(`https://localhost:${port}`);
     });
   })
   .catch((err) => {
@@ -35,7 +35,7 @@ const connection = async () => {
       useNewUrlParser: "true",
     });
     app.listen(port, () => {
-      console.log("connect");
+      console.log(`https://localhost:${port}`);
     });
   } catch (error) {
     console.log(error);
