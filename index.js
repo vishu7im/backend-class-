@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
-import { router } from "./api/main.js";
 import mongoose from "mongoose";
+import { auth } from "./api/auth.js";
 const app = express();
 const port = 5000;
 const DB = `mongodb://localhost:27017/chandni`;
@@ -9,8 +9,8 @@ const DB = `mongodb://localhost:27017/chandni`;
 app.use(cors());
 app.use(express.json());
 
-// api
-app.use(router);
+// auth
+app.use("/auth", auth);
 
 mongoose.set("strictQuery", true);
 

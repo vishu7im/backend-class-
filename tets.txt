@@ -1,0 +1,10 @@
+name 
+username : // unique 
+pwd : encrypt // 
+email : // unique 
+mobile no . :// unique 
+
+
+db designe //
+
+// api create 
