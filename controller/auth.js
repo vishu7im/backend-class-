@@ -1,5 +1,6 @@
 //controllers
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 import { user } from "../DB/auth.js";
 
@@ -34,7 +35,8 @@ export const login = async (req, res) => {
       try {
         const hash = await bcrypt.compare(pwd, data.pwd);
         if (hash) {
-          res.status(200).json({ msg: "Authorized" });
+          const token = jwt.sign({ id: data._id }, process.env.PRIVATE_KEY);
+          res.status(200).json({ msg: "Authorized", token: token });
         } else {
           res.status(401).json({ msg: "Unauthorized" });
         }
