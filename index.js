@@ -1,3 +1,5 @@
+import * as env from "dotenv";
+env.config();
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -5,9 +7,6 @@ import { auth } from "./api/auth.js";
 const app = express();
 const port = 5000;
 const DB = `mongodb://localhost:27017/chandni`;
-//env config
-import * as env from "dotenv";
-env.config();
 
 app.use(cors());
 app.use(express.json());
