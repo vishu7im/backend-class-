@@ -8,7 +8,7 @@ export const Authorization = async (req, res, next) => {
     try {
       const result = await jwt.verify(token[1], process.env.PRIVATE_KEY);
       // new feild
-      req.vishal = result;
+      req.user = result;
       next();
     } catch (error) {
       res.status(401).json({ msg: "Unauthorized", err: error });
