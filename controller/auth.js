@@ -54,32 +54,25 @@ export const login = async (req, res) => {
 export const change = async (req, res) => {
   //code
   const { oldpwd, newpwd } = req.body;
+
   try {
-    const data = await user.findOne({ _id: req.user.id });
-    try {
-      const hash = await bcrypt.compare(oldpwd, data.pwd);
-      if (hash) {
+    const hash = await bcrypt.compare(oldpwd, req.user.pwd);
+    if (hash) {
+      try {
+        const hashpwd = await bcrypt.hash(newpwd, 10);
         try {
-          const hashpwd = await bcrypt.hash(newpwd, 10);
-          try {
-            await user.findByIdAndUpdate(
-              { _id: req.user.id },
-              { pwd: hashpwd }
-            );
-            res.status(200).json({ msg: "pwd changed" });
-          } catch (error) {
-            res.status(500).json({ msg: error });
-          }
+          await user.findByIdAndUpdate({ _id: req.user.id }, { pwd: hashpwd });
+          res.status(200).json({ msg: "pwd changed" });
         } catch (error) {
-          res.status(402).json({ msg: "Unauthorized" });
+          res.status(500).json({ msg: error });
         }
-      } else {
+      } catch (error) {
         res.status(402).json({ msg: "Unauthorized" });
       }
-    } catch (error) {
-      res.status(500).json({ msg: error });
+    } else {
+      res.status(402).json({ msg: "Unauthorized" });
     }
   } catch (error) {
-    res.status(500).json({ msg: "Unauthorized" });
+    res.status(500).json({ msg: error });
   }
 };
